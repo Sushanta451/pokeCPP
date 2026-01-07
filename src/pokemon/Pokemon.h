@@ -26,7 +26,7 @@ private:
     int spd_iv;
     int speed_iv;
 
-    // evs - 
+    // evs 
     int hp_ev;
     int attack_ev;
     int defense_ev;
@@ -42,16 +42,13 @@ private:
     int spd_base;
     int speed_base;
 
-    void calc_stats();
+    void calc_stats(){
+
+    }
     int generate_iv();
 
 public:
-    // Constructor
-    Pokemon(std::string name, int level) {
-        this->name = name;
-        this->level = level;
-    }
-
+    Pokemon(std::string pokemon_name, int pokemon_level);
 };
 
 #endif
