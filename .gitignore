@@ -1,0 +1,22 @@
+# Executables
+*.exe
+*.out
+a.out
+pokemon
+game
+
+# Object files
+*.o
+*.obj
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# Mac files
+.DS_Store
+
+# Build
+build/
+bin/
