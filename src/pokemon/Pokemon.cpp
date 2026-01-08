@@ -215,28 +215,49 @@ int Pokemon::getSpeed_iv() const{
 
 //setter
 
-void Pokemon::takeDamage(int damage){
-    hp -= damage;
-    if( damage > hp){
-        hp = 0;
+
+Pokemon& Pokemon::takeDamage(int damage){
+    this->hp -= damage;
+
+    if(damage > this->hp){
+        this->hp = 0;
     }
-    std::cout << name << "HP" << hp << "/" << maxhp << std::endl;
-    if(hp == 0){
-        std::cout << name << " has fainted" << std::endl;
-    }
+    std::cout << name << "HP" << this->hp << "/" << this->maxhp << std::endl;
+    return *this;
 }
 
-void Pokemon::heal(int amount){
-    hp += amount;
-    if(amount  > maxhp){
-        hp = maxhp;
+Pokemon& Pokemon::heal(int amount){
+    this->hp +=  amount;
+    if(amount > this->maxhp){
+        this->hp = this->maxhp;
     }
-    std::cout << name << " was healed: " << amount << " hp." << std::endl; 
+    std::cout << this->name << " was healed: " << amount << " hp." << std::endl; 
+    return *this;
 }
-void Pokemon::gainExp(int amount){
-    exp+= amount;
-    std::cout << name << " ganined " << amount << " exp " << std::endl;
+
+Pokemon& Pokemon::gainExp(int amount){
+    this->exp += amount;
+     std::cout << this->name << " ganined " << amount << " exp " << std::endl;
+     return *this;
 }
+
+
+Pokemon& Pokemon::setLevel(int level){
+    if(level < 0){
+       this-> level = 1;
+    }
+    else if(level > 100){
+        this->level =100;
+    }
+    else{
+        this->level = level;
+    }
+    this->calc_stats();
+    this->hp = this->maxhp;
+    std::cout << this->name << " is now level " << this->level << "!" << std::endl;
+    return *this;
+}
+
 
 bool Pokemon::isFainted() const{
     if(hp == 0){
@@ -246,3 +267,69 @@ bool Pokemon::isFainted() const{
         return false;
     }
 }
+
+void Pokemon::displayInfo() const {
+    std::cout << "\n╔══════════════════════════════════╗" << std::endl;
+    std::cout << "║  Pokemon: " << this->name << " (Level " << this->level << ")  " << std::endl;
+    std::cout << "╠══════════════════════════════════╣" << std::endl;
+    std::cout << "║  HP:     " << this->hp << "/" << this->maxhp << std::endl;
+    std::cout << "║  Attack: " << this->attack << std::endl;
+    std::cout << "║  Defense: " << this->defense << std::endl;
+    std::cout << "║  Sp.Atk: " << this->spa << std::endl;
+    std::cout << "║  Sp.Def: " << this->spd << std::endl;
+    std::cout << "║  Speed:  " << this->speed << std::endl;
+    std::cout << "╠══════════════════════════════════╣" << std::endl;
+    std::cout << "║  IVs: HP=" << this->hp_iv 
+              << " ATK=" << this->attack_iv 
+              << " DEF=" << this->defense_iv << std::endl;
+    std::cout << "║       SpA=" << this->spa_iv 
+              << " SpD=" << this->spd_iv 
+              << " SPD=" << this->speed_iv << std::endl;
+    std::cout << "╠══════════════════════════════════╣" << std::endl;
+    std::cout << "║  EVs: HP=" << this->hp_ev 
+              << " ATK=" << this->attack_ev 
+              << " DEF=" << this->defense_ev << std::endl;
+    std::cout << "║       SpA=" << this->spa_ev 
+              << " SpD=" << this->spd_ev 
+              << " SPD=" << this->speed_ev << std::endl;
+    std::cout << "╚══════════════════════════════════╝" << std::endl;
+}
+
+
+Pokemon& Pokemon::addEv(int stat_hp,int stat_attack,int stat_defence,int stat_spa,int stat_spd, int stat_speed){
+    std::cout << this->name << "current eve while traning" << std::endl;
+    this->hp_ev += stat_hp;
+    this->attack_ev += stat_attack;
+    this->defense_ev += stat_defence;
+    this->spa_ev += stat_spa;
+    this->spd_ev += stat_spd;
+    this->speed_ev += stat_speed;
+
+    if(this->hp_ev > 252){
+        this->hp_ev = 252;
+    }
+     if(this->attack_ev > 252){
+        this->attack_ev = 252;
+    }
+     if(this->defense_ev > 252){
+        this->defense_ev =  252;
+    }
+     if(this->spa_ev > 252){
+        this->spa_ev = 252;
+    }
+     if(this->spd_ev > 252){
+        this->spd_ev= 252;
+    }
+     if(this->speed_ev > 252){
+        this->speed_ev = 252;
+    }
+
+    this->calc_stats();
+    return *this;
+
+}
+
+bool Pokemon::isSamePokemon(const Pokemon& other)const{
+    return this == &other;
+}
+

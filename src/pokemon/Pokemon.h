@@ -52,11 +52,12 @@ public:
     Pokemon(); // party
     Pokemon(const Pokemon& other); //used for trading, putting pokemon in boxes
 
+    //getters
     std::string getName() const;
     int getLevel() const;
     int getExp() const;
     
-    // getters
+    //stats
     int getHp() const;
     int getMaxhp() const;
     int getAttack() const;
@@ -65,7 +66,7 @@ public:
     int getSpd() const;
     int getSpeed() const;
     
-    // IV getters
+    // iv 
     int getHp_iv() const;
     int getAttack_iv() const;
     int getDefense_iv() const;
@@ -73,14 +74,17 @@ public:
     int getSpd_iv() const;
     int getSpeed_iv() const;
     
-    // SETTERS - controlled modification
-    void takeDamage(int damage);
-    void heal(int amount);
-    void gainExp(int amount);
+    // setters 
+    Pokemon &takeDamage(int damage);
+    Pokemon &heal(int amount);
+    Pokemon &gainExp(int amount);
+    Pokemon &setLevel(int level);
     
-    // Status check
+    // check
     bool isFainted() const;
-
+    void displayInfo()const;
+    Pokemon &addEv(int stat_hp,int stat_attack,int stat_defence,
+                   int stat_spa,int stat_spd, int stat_speed);
+    bool isSamePokemon(const Pokemon& other) const;
 };
-
 #endif
