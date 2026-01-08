@@ -42,13 +42,45 @@ private:
     int spd_base;
     int speed_base;
 
-    void calc_stats(){
-
-    }
+    void calc_stats();
+    
     int generate_iv();
 
 public:
-    Pokemon(std::string pokemon_name, int pokemon_level);
+    //overloading
+    Pokemon(std::string pokemon_name, int pokemon_level); // wild encouters,etc..
+    Pokemon(); // party
+    Pokemon(const Pokemon& other); //used for trading, putting pokemon in boxes
+
+    std::string getName() const;
+    int getLevel() const;
+    int getExp() const;
+    
+    // getters
+    int getHp() const;
+    int getMaxhp() const;
+    int getAttack() const;
+    int getDefense() const;
+    int getSpa() const;
+    int getSpd() const;
+    int getSpeed() const;
+    
+    // IV getters
+    int getHp_iv() const;
+    int getAttack_iv() const;
+    int getDefense_iv() const;
+    int getSpa_iv() const;
+    int getSpd_iv() const;
+    int getSpeed_iv() const;
+    
+    // SETTERS - controlled modification
+    void takeDamage(int damage);
+    void heal(int amount);
+    void gainExp(int amount);
+    
+    // Status check
+    bool isFainted() const;
+
 };
 
 #endif

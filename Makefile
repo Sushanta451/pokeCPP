@@ -1,19 +1,15 @@
 # Compiler settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall
-INCLUDES = -I/opt/homebrew/include
+INCLUDES = -I/opt/homebrew/include -Isrc
 LIBS = -L/opt/homebrew/lib -lraylib
-
-# Directories
-SRC_DIR = src
-BUILD_DIR = build
 
 # Target executable
 TARGET = pokemon
 
-# Source files (will find all .cpp files in src/)
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+# Find all .cpp files recursively (including subdirectories!)
+SOURCES = $(shell find src -name "*.cpp")
+OBJECTS = $(SOURCES:.cpp=.o)
 
 # Default target
 all: $(TARGET)
@@ -23,18 +19,14 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LIBS) -o $(TARGET)
 
 # Compile
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-# Create build directory
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
-
-# Clean build files
+# Clean
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -f $(shell find src -name "*.o") $(TARGET)
 
-# Run the game
+# Run
 run: $(TARGET)
 	./$(TARGET)
 
