@@ -217,21 +217,21 @@ int Pokemon::getSpeed_iv() const{
 
 
 Pokemon& Pokemon::takeDamage(int damage){
+    std::cout << name << " takes " << damage << " damage!" << std::endl;
     this->hp -= damage;
-
-    if(damage > this->hp){
+    if(this->hp < 0){ 
         this->hp = 0;
     }
-    std::cout << name << "HP" << this->hp << "/" << this->maxhp << std::endl;
+    std::cout << name << " HP: " << this->hp << "/" << this->maxhp << std::endl;
     return *this;
 }
-
 Pokemon& Pokemon::heal(int amount){
-    this->hp +=  amount;
-    if(amount > this->maxhp){
+    std::cout << this->name << " heals " << amount << " HP!" << std::endl;
+    this->hp += amount;
+    if(this->hp > this->maxhp){
         this->hp = this->maxhp;
     }
-    std::cout << this->name << " was healed: " << amount << " hp." << std::endl; 
+    std::cout << this->name << " HP: " << this->hp << "/" << this->maxhp << std::endl;
     return *this;
 }
 
